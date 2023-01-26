@@ -5,7 +5,7 @@ server_list=$(cat /tmp/listfile)
 
 # Loop through server list
 for server in $server_list; do
-    # SSH to server as unixdata and check if the entry exists
+    # SSH to server as admin and check if the entry exists
     if ! ssh admin@$server "sudo grep -q '192.20.20.21 domain2.com' /etc/hosts"; then
         echo "Entry does not exist in /etc/hosts on $server. Skipping."
         continue

@@ -1,0 +1,131 @@
+## USEFUL YUM COMMANDS
+
+Update all packages: yum update
+
+Install a package: yum install package_name
+
+Remove a package: yum remove package_name
+
+Search for a package: yum search package_name
+
+List all installed packages: yum list installed
+
+List all available packages: yum list available
+
+List updates available: yum check-update
+
+List package information: yum info package_name
+
+Clean the yum cache: yum clean all
+
+Download a package without installing it: yumdownloader package_name
+
+List package groups: yum grouplist
+
+Install a package group: yum groupinstall group_name
+
+Remove a package group: yum groupremove group_name
+
+Add repository: yum-config-manager --add-repo=https://example.com/repo.repo
+
+Remove repository: yum-config-manager --disable repo_name
+
+Show all repositories : yum repolist
+
+Upgrade a specific package to a specific version: yum upgrade package_name-version
+
+Download and install a package: yum --downloadonly --downloaddir=/path/to/directory install package_name
+
+Rollback a package to a previous version: yum history undo last
+
+Reinstall a package: yum reinstall package_name
+
+Check the dependencies of a package: yum deplist package_name
+
+List packages that were recently added or updated: yum history list all
+
+Downgrade a package to a specific version: yum downgrade package_name-version
+
+Check if a package is installed: yum list installed package_name
+
+Check the package details for a specific package: yum info package_name
+
+Check what will be installed, removed or updated with a command : yum --dry-run update
+
+Enable/disable repository: yum-config-manager --enable/--disable repo_name
+
+Check the version of installed package: yum version package_name
+
+Check the current yum configuration settings: yum-config-manager --list
+
+Show all the packages installed by a particular repository: yum --disablerepo="*" --enablerepo="reponame" list installed
+
+List all available package updates: yum list updates
+
+List all packages that have security updates available: yum list-security
+
+List all packages that have bugfix updates available: yum list-bugfix
+
+List all packages that have enhancement updates available: yum list-enhancement
+
+Check if a package is available in any repository: yum provides package_name
+
+Check if a package is available in a specific repository: yum --disablerepo="*" --enablerepo="reponame" list available package_name
+
+Check if a package is available in a specific repository: yum --disablerepo="*" --enablerepo="reponame" list package_name
+
+Check what package a file belongs to: yum whatprovides path/to/file
+
+Check the dependencies of a package: yum deplist package_name
+
+Check the package signature : yum verify package_name
+
+List the packages that are installed in a specific group: yum groupinfo group_name
+
+Show the package details for a package group: yum groupinfo group_name
+
+Check the security updates available for all packages: yum --security check-update
+
+Check the bugfix updates available for all packages: yum --bugfix check-update
+
+Check the enhancement updates available for all packages: yum --enhancement check-update
+
+Clear the yum cache: yum clean all
+
+Clear the yum metadata cache: yum clean metadata
+
+Clear the yum packages cache: yum clean packages
+
+Clear the yum transaction history: yum history new
+
+List all installed packages: yum list installed
+
+List all available packages: yum list available
+
+List all packages in a specific repository: yum --disablerepo="*" --enablerepo="reponame" list
+
+Search for a package by keyword: yum search keyword
+
+List the files installed by a package: yum list files package_name
+
+Check for updates for a specific package: yum check-update package_name
+
+Check for updates for all packages: yum check-update
+
+Search for a package by name: yum --showduplicates list package_name
+
+Search for a package by name and version: yum --showduplicates list package_name-version
+
+List the package groups: yum grouplist
+
+Install package group: yum groupinstall group_name
+
+Remove package group: yum groupremove group_name
+
+Check which packages belong to a group: yum groupinfo group_name
+
+Check the history of yum transactions: yum history
+
+Show the information of a specific transaction: yum history info transaction_id
+
+Remove a package and its dependencies: yum autoremove package_name

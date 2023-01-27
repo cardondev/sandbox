@@ -1,0 +1,28 @@
+## Useful Hammer Commands
+List all systems: hammer system list
+
+Search for a system by hostname: hammer system list --search "hostname = myhost"
+
+List all available subscriptions: hammer subscription list
+
+List all installed packages on a system: hammer package list --system-id 1
+
+List all available content views: hammer content-view list
+
+List all available lifecycle environments: hammer lifecycle-environment list
+
+Create a new lifecycle environment: hammer lifecycle-environment create --name "Dev" --prior "Library"
+
+List all available activation keys: hammer activation-key list
+
+Create a new activation key: hammer activation-key create --name "mykey" --organization "ACME" --lifecycle-environment "Dev"
+
+List all available content hosts: hammer content-host list
+
+Register a new content host: hammer content-host create --name "myhost" --organization "ACME" --environment "Dev" --content-view "myview" --lifecycle-environment "Dev"
+
+Synchronize a product: hammer product synchronize --name "Red Hat Enterprise Linux Server"
+
+Sync all products: hammer product synchronize --all
+
+Remove a system: hammer system delete --id 1

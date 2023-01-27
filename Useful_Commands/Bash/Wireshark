@@ -1,0 +1,19 @@
+## USEFUL WIRESHARK FILTERS
+
+Filter by IP address: "ip.addr == 192.168.1.1" (displays only packets with the IP address 192.168.1.1)
+
+Filter by port number: "tcp.port == 80" (displays only packets using TCP port 80)
+
+Filter by protocol: "http" (displays only packets using the HTTP protocol)
+
+Filter by hostname: "host www.example.com" (displays only packets to or from the host www.example.com)
+
+Filter by packet content: "data contains "password"" (displays only packets that contain the string "password")
+
+Filter by packet type: "frame.type == 0x800" (displays only packets of type 0x800, which is the Ethernet II packet type)
+
+Filter by source and destination: "ip.src == 192.168.1.1 and ip.dst == 192.168.1.2" (displays only packets going from IP address 192.168.1.1 to IP address 192.168.1.2)
+
+Filter by negation: "!(http)" (displays only packets that are not using the HTTP protocol)
+
+Note that you can combine filters by using the "and", "or", and "not" operators.

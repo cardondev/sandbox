@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Define the paths to the lists
+serversaz_list="/tmp/serversaz"
+servers_list="/tmp/servers"
+new_list="/tmp/new_servers"
+
+# Compare the two lists and output the differences to the new list
+diff --new-line-format="%L" --unchanged-line-format= --old-line-format= "$servers_list" "$serversaz_list" > "$new_list"
+
+# Check if the new list is empty
+if [ ! -s "$new_list" ]
+then
+    echo "All servers in $servers_list are already in $serversaz_list"
+else
+    echo "The following servers in $servers_list are not in $serversaz_list:"
+    cat "$new_list"
+fi

@@ -6,7 +6,7 @@ servers_list="/tmp/servers"
 new_list="/tmp/new_servers"
 
 # Compare the two lists and output the differences to the new list
-diff --new-line-format="%L" --unchanged-line-format= --old-line-format= "$servers_list" "$serversaz_list" > "$new_list"
+comm -13 <(sort "$serversaz_list") <(sort "$servers_list") > "$new_list"
 
 # Check if the new list is empty
 if [ ! -s "$new_list" ]
@@ -16,3 +16,4 @@ else
     echo "The following servers in $servers_list are not in $serversaz_list:"
     cat "$new_list"
 fi
+

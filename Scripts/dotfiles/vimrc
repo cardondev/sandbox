@@ -1,0 +1,87 @@
+" ~/.vimrc
+
+" Enable syntax highlighting
+syntax on
+
+" Set colorscheme
+colorscheme desert
+
+" Set background color
+set background=dark
+
+" Enable 256 colors support
+set t_Co=256
+
+" Customize colors
+highlight Normal ctermfg=255 ctermbg=235
+highlight Comment ctermfg=114
+highlight Constant ctermfg=210
+highlight String ctermfg=150
+highlight Number ctermfg=203
+highlight Identifier ctermfg=117
+highlight Statement ctermfg=222 cterm=bold
+highlight PreProc ctermfg=141
+highlight Type ctermfg=81 cterm=bold
+highlight Special ctermfg=203
+highlight Underlined ctermfg=81 cterm=underline
+highlight Error ctermfg=196 ctermbg=NONE
+highlight Todo ctermfg=black ctermbg=226
+
+" Show line numbers
+set number
+
+" Enable relative line numbers
+set relativenumber
+
+" Highlight current line
+set cursorline
+highlight CursorLine ctermbg=236
+
+" Show matching brackets
+set showmatch
+highlight MatchParen ctermbg=240
+
+" Enable auto indentation
+set autoindent
+set smartindent
+
+" Set tab width to 4 spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" Enable mouse support
+set mouse=a
+
+" Enable search highlighting
+set hlsearch
+highlight Search ctermfg=black ctermbg=226
+
+" Enable incremental search
+set incsearch
+
+" Ignore case in search
+set ignorecase
+
+" Enable smart case search
+set smartcase
+
+" Show status line
+set laststatus=2
+highlight StatusLine ctermfg=255 ctermbg=240
+highlight StatusLineNC ctermfg=246 ctermbg=238
+
+" Show command in status line
+set showcmd
+
+" Set a colored column at 80 characters
+set colorcolumn=100
+highlight ColorColumn ctermbg=238
+
+" Enable code folding
+set foldmethod=indent
+set foldlevel=99
+highlight Folded ctermfg=246 ctermbg=238
+
+" Enable file type detection and plugin indent
+filetype plugin indent on

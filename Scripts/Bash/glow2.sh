@@ -38,9 +38,9 @@ while IFS= read -r line; do
     fi
     
     if $ignore_case; then
-      line=$(echo "$line" | sed -E "s|(${pattern})|${current_color}\1${reset}|gI")
+      line=$(echo "$line" | awk -v pattern="$pattern" -v color="$current_color" -v reset="$reset" 'BEGIN{IGNORECASE=1} {gsub(pattern, color "&" reset); print}')
     else
-      line=$(echo "$line" | sed -E "s|(${pattern})|${current_color}\1${reset}|g")
+      line=$(echo "$line" | awk -v pattern="$pattern" -v color="$current_color" -v reset="$reset" '{gsub(pattern, color "&" reset); print}')
     fi
   done
   echo -e "$line"

@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-# Define color codes
+# Define color codes for background
 colors=(
-  '\033[0;31m'  # Red
-  '\033[0;32m'  # Green
-  '\033[0;34m'  # Blue
-  '\033[0;33m'  # Yellow
-  '\033[1;35m'  # Magenta (bold)
-  '\033[1;37m'  # White (bold)
-  '\033[0;36m'  # Cyan
-  '\033[1;31m'  # Red (bold)
-  '\033[1;32m'  # Lime Green
-  '\033[1;35m'  # Neon Pink
+  '\033[41m'  # Red
+  '\033[42m'  # Green
+  '\033[44m'  # Blue
+  '\033[43m'  # Yellow
+  '\033[45m'  # Magenta
+  '\033[47m'  # White
+  '\033[46m'  # Cyan
+  '\033[101m'  # Red (bright)
+  '\033[102m'  # Lime Green
+  '\033[105m'  # Neon Pink
 )
 reset='\033[0m'
 
@@ -26,8 +26,8 @@ while IFS= read -r line; do
       continue
     fi
     
-    if [[ "$pattern" =~ ^-c(${colors[@]%m*})$ ]]; then
-      color="${BASH_REMATCH[1]}m"
+    if [[ "$pattern" =~ ^-c(red|green|blue|yellow|magenta|white|cyan|red_bright|lime_green|neon_pink)$ ]]; then
+      color="${colors[${BASH_REMATCH[1]}]}"
       continue
     fi
     
@@ -39,9 +39,9 @@ while IFS= read -r line; do
     fi
     
     if $ignore_case; then
-      colored_line=$(echo "$colored_line" | sed -E "s/($pattern)/${current_color}\1${reset}/gI")
+      colored_line=$(echo "$colored_line" | sed -E "s/(${pattern})/${current_color}\1${reset}/gI")
     else
-      colored_line=$(echo "$colored_line" | sed -E "s/($pattern)/${current_color}\1${reset}/g")
+      colored_line=$(echo "$colored_line" | sed -E "s/(${pattern})/${current_color}\1${reset}/g")
     fi
   done
   echo -e "$colored_line"

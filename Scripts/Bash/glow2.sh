@@ -19,7 +19,6 @@ reset='\033[0m'
 index=0
 ignore_case=false
 while IFS= read -r line; do
-  colored_line="$line"
   for pattern in "$@"; do
     if [[ "$pattern" == "-i" ]]; then
       ignore_case=true
@@ -39,12 +38,12 @@ while IFS= read -r line; do
     fi
     
     if $ignore_case; then
-      colored_line=$(echo "$colored_line" | sed -E "s/(${pattern})/${current_color}\1${reset}/gI")
+      line=$(echo "$line" | sed -E "s|(${pattern})|${current_color}\1${reset}|gI")
     else
-      colored_line=$(echo "$colored_line" | sed -E "s/(${pattern})/${current_color}\1${reset}/g")
+      line=$(echo "$line" | sed -E "s|(${pattern})|${current_color}\1${reset}|g")
     fi
   done
-  echo -e "$colored_line"
+  echo -e "$line"
 done
 
 echo -ne "$reset"

@@ -1,56 +1,49 @@
 #!/usr/bin/env bash
 
 # Define color codes
-red='\033[0;31m'
-green='\033[0;32m'
-yellow='\033[0;33m'
-blue='\033[0;34m'
-magenta='\033[0;35m'
-cyan='\033[0;36m'
-lime_green='\033[1;32m'
-neon_pink='\033[1;35m'
-bold_red='\033[1;31m'
-bold_green='\033[1;32m'
-bold_yellow='\033[1;33m'
-bold_blue='\033[1;34m'
+colors=(
+  '\033[0;31m'  # Red
+  '\033[0;32m'  # Green
+  '\033[0;33m'  # Yellow
+  '\033[0;34m'  # Blue
+  '\033[0;35m'  # Magenta
+  '\033[0;36m'  # Cyan
+  '\033[1;32m'  # Lime Green
+  '\033[1;35m'  # Neon Pink
+)
 reset='\033[0m'
 
 # Function to display usage information
 usage() {
-  echo "Usage: command | glow [-c COLOR] [PATTERN...]"
+  echo "Usage: command | glow [-i] [-c COLOR] [PATTERN...]"
   echo "Highlight text matching PATTERNs with specified COLOR or automatically assigned colors."
   echo
   echo "Options:"
+  echo "  -i         Perform case-insensitive matching"
   echo "  -c COLOR   Specify the color to use for highlighting (default: automatic)"
   echo
   echo "Available colors:"
-  echo "  red, green, yellow, blue, magenta, cyan, lime_green, neon_pink,"
-  echo "  bold_red, bold_green, bold_yellow, bold_blue"
+  echo "  red, green, yellow, blue, magenta, cyan, lime_green, neon_pink"
   echo
   echo "Examples:"
-  echo "  cat myfile.txt | glow -c neon_pink text1 text2"
-  echo "  ls | glow movies"
+  echo "  cat /etc/issue | glow -i -c neon_pink authentication"
+  echo "  ls | glow -i movies"
 }
 
 # Parse command-line options
+ignore_case=false
 color=""
-while getopts ":hc:" opt; do
+while getopts ":hic:" opt; do
   case $opt in
     h)
       usage
       exit 0
       ;;
+    i)
+      ignore_case=true
+      ;;
     c)
-      case "$OPTARG" in
-        red|green|yellow|blue|magenta|cyan|lime_green|neon_pink|bold_red|bold_green|bold_yellow|bold_blue)
-          color="${!OPTARG}"
-          ;;
-        *)
-          echo "Invalid color: $OPTARG" >&2
-          usage
-          exit 1
-          ;;
-      esac
+      color="${!OPTARG}"
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -61,10 +54,11 @@ while getopts ":hc:" opt; do
 done
 shift $((OPTIND - 1))
 
-# Assign default colors if no color is specified
-if [[ -z "$color" ]]; then
-  colors=("$red" "$green" "$blue" "$yellow" "$magenta" "$cyan" "$lime_green" "$neon_pink")
-  num_colors=${#colors[@]}
+# Set grep options based on case sensitivity
+if $ignore_case; then
+  grep_opts="-Ei"
+else
+  grep_opts="-E"
 fi
 
 # Highlight matching patterns
@@ -72,12 +66,12 @@ index=0
 while IFS= read -r line; do
   for pattern in "$@"; do
     if [[ -z "$color" ]]; then
-      current_color=${colors[$((index % num_colors))]}
+      current_color=${colors[$((index % ${#colors[@]}))]}
       ((index++))
     else
       current_color=$color
     fi
-    line=$(echo "$line" | sed -E "s/($pattern)/${current_color}\1${reset}/g")
+    line=$(echo "$line" | grep $grep_opts --color=always "$pattern" | sed -E "s/($pattern)/${current_color}\1${reset}/gI")
   done
   echo -e "$line"
 done

@@ -1,49 +1,29 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Define color codes for background
-colors=(
-  '\033[41m'  # Red
-  '\033[42m'  # Green
-  '\033[44m'  # Blue
-  '\033[43m'  # Yellow
-  '\033[45m'  # Magenta
-  '\033[47m'  # White
-  '\033[46m'  # Cyan
-  '\033[101m'  # Red (bright)
-  '\033[102m'  # Lime Green
-  '\033[105m'  # Neon Pink
-)
-reset='\033[0m'
+# Define the array of colors
+glows=("41" "42" "44" "43" "45" "47" "46" "41;1")
 
-# Highlight matching patterns
-index=0
-ignore_case=false
+# Split the input patterns into an array
+IFS=' ' read -r -a regexp <<< "$*"
+
+# Print the patterns and colors (for debugging purposes)
+echo -e "\n<${regexp[*]}>\n"
+echo -e "\n<${glows[*]}>\n"
+
+# Read the input line by line
 while IFS= read -r line; do
-  for pattern in "$@"; do
-    if [[ "$pattern" == "-i" ]]; then
-      ignore_case=true
-      continue
-    fi
-    
-    if [[ "$pattern" =~ ^-c(red|green|blue|yellow|magenta|white|cyan|red_bright|lime_green|neon_pink)$ ]]; then
-      color="${colors[${BASH_REMATCH[1]}]}"
-      continue
-    fi
-    
-    if [[ -z "$color" ]]; then
-      current_color=${colors[$((index % ${#colors[@]}))]}
-      ((index++))
-    else
-      current_color=$color
-    fi
-    
-    if $ignore_case; then
-      line=$(echo "$line" | awk -v pattern="$pattern" -v color="$current_color" -v reset="$reset" 'BEGIN{IGNORECASE=1} {gsub(pattern, color "&" reset); print}')
-    else
-      line=$(echo "$line" | awk -v pattern="$pattern" -v color="$current_color" -v reset="$reset" '{gsub(pattern, color "&" reset); print}')
-    fi
-  done
-  echo -e "$line"
-done
+    # Initialize the glow index
+    c=0
+    num_glows=${#glows[@]}
 
-echo -ne "$reset"
+    # Loop through each pattern
+    for rex in "${regexp[@]}"; do
+        c=$(( c % num_glows ))
+        glow=${glows[$c]}
+        # Replace the pattern with the highlighted pattern
+        line=$(echo "$line" | sed -E "s/($rex)/\x1b[${glow}m\1\x1b[0m/g")
+        c=$(( c + 1 ))
+    done
+    # Print the modified line
+    echo -e "$line"
+done
